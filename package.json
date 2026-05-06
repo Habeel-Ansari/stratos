@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^6.0.1",
-    "firecrawl-cli": "^1.15.2",
     "lucide-react": "^1.11.0",
     "motion": "^12.38.0",
     "react": "^19.2.5",

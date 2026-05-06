@@ -418,7 +418,8 @@ export function ContactSection() {
   const channelRef = useRef(null);
 
   const handleChange = useCallback((event) => {
-    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+    const { name, value } = event.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
     setStatus("idle");
   }, []);
 
