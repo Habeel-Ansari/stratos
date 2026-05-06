@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   ChevronRight,
@@ -417,11 +417,11 @@ export function ContactSection() {
   const [status, setStatus] = useState("idle");
   const channelRef = useRef(null);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-    setForm((f) => ({ ...f, [name]: value }));
-    if (status !== "idle") setStatus("idle");
-  };
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setStatus("idle");
+  }, []);
 
   const summary = useMemo(() => [
     "Stratos Energy enquiry",
@@ -486,8 +486,11 @@ export function ContactSection() {
           </div>
           <div className="form-field">
             <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="name@company.com"
-              autoComplete="email" required value={form.email} onChange={handleChange} />
+            <input id="email" name="email" type="text" inputMode="email"
+              placeholder="name@company.com" autoComplete="email" required
+              pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+              title="Enter a valid email address"
+              value={form.email} onChange={handleChange} />
           </div>
           <div className="form-field">
             <label htmlFor="phone">Phone</label>
