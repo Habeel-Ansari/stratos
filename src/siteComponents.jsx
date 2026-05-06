@@ -417,9 +417,8 @@ export function ContactSection() {
   const [status, setStatus] = useState("idle");
   const channelRef = useRef(null);
 
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+  const handleChange = useCallback((event) => {
+    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
     setStatus("idle");
   }, []);
 
