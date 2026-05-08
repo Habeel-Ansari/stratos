@@ -594,6 +594,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   margin-bottom: 0.3rem;
 }
 .c-label { font-size: 0.75rem; color: var(--tx-3); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.c-sep  { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
 .c-value { font-size: 0.92rem; font-weight: 700; color: var(--tx); word-break: break-word; line-height: 1.45; }
 
 /* Form */

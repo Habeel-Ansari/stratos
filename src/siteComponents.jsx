@@ -473,6 +473,7 @@ export function ContactSection() {
             >
               <div className="c-icon"><Icon size={17} /></div>
               <span className="c-label">{item.label}</span>
+              <span className="c-sep" aria-hidden="true">: </span>
               <span className="c-value">{item.value}</span>
             </a>
           );
