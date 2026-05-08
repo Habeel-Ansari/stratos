@@ -589,9 +589,7 @@ export function ContactPage() {
       </div>
 
       <section className="section section-top0">
-        <Reveal>
-          <ContactSection />
-        </Reveal>
+        <ContactSection />
       </section>
     </>
   );
