@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   ChevronRight,
@@ -409,28 +409,53 @@ export function CategoryGrid({ compact = false, linkTo = "/contact" }) {
 }
 
 /* ─── Contact section ──────────────────────────────────────── */
-export function ContactSection() {
-  const [status, setStatus] = useState("idle");
-  const channelRef = useRef(null);
 
-  const handleSubmit = (e) => {
+// Web3Forms access key — replace with your key from https://web3forms.com
+// Enter your email on that page and they will send you the key instantly.
+const W3F_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+
+export function ContactSection() {
+  // "idle" | "sending" | "sent" | "error"
+  const [status, setStatus] = useState("idle");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const d = Object.fromEntries(new FormData(e.target));
-    const summary = [
-      "Stratos Energy enquiry",
-      `Name: ${d.name}`,
-      `Company: ${d.company}`,
-      `Email: ${d.email}`,
-      `Phone: ${d.phone}`,
-      `Category: ${d.category}`,
-      `Details: ${d.details || "Not provided"}`,
-    ].join("\n");
-    const sub = encodeURIComponent(`Enquiry from ${d.company || d.name || "website"}`);
-    const mailHref = `mailto:sales@stratosenergy.sa?subject=${sub}&body=${encodeURIComponent(summary)}`;
-    const waHref = `https://wa.me/966597020427?text=${encodeURIComponent(summary)}`;
-    window.open(channelRef.current === "email" ? mailHref : waHref, "_blank", "noreferrer");
-    setStatus("submitted");
+
+    setStatus("sending");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: W3F_KEY,
+          subject: `Stratos Energy enquiry from ${d.company || d.name || "website"}`,
+          from_name: d.name,
+          // Web3Forms uses the "email" field to set reply-to automatically
+          email: d.email,
+          // Extra fields shown in the email body
+          Company: d.company,
+          Phone: d.phone,
+          "Product category": d.category,
+          "Project details": d.details || "Not provided",
+        }),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setStatus("sent");
+        e.target.reset();
+      } else {
+        console.error("Web3Forms error:", json);
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Submit failed:", err);
+      setStatus("error");
+    }
   };
+
+  const waHref = "https://wa.me/966597020427";
 
   return (
     <div className="contact-layout">
@@ -454,7 +479,7 @@ export function ContactSection() {
         })}
       </div>
 
-      {/* Form — uncontrolled inputs, data collected via FormData at submit */}
+      {/* Form — uncontrolled inputs, data submitted to Web3Forms on send */}
       <form className="quote-form" onSubmit={handleSubmit}>
         <div className="form-grid">
           <div className="form-field">
@@ -492,30 +517,35 @@ export function ContactSection() {
           </div>
         </div>
 
-        <p className="form-helper">
-          Fill in the form above, then choose how you'd like to send — your details will be pre-filled.
-        </p>
-
         <div className="form-actions">
           <button
             type="submit"
             className="btn btn-primary"
-            onClick={() => { channelRef.current = "email"; }}
+            disabled={status === "sending"}
           >
-            <Mail size={17} /> Send by Email
+            {status === "sending"
+              ? <><span className="spinner" aria-hidden="true" /> Sending…</>
+              : <><Mail size={17} /> Send Enquiry</>}
           </button>
-          <button
-            type="submit"
+
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noreferrer"
             className="btn btn-ghost"
-            onClick={() => { channelRef.current = "whatsapp"; }}
           >
-            <MessageCircle size={17} /> Send by WhatsApp
-          </button>
+            <MessageCircle size={17} /> WhatsApp us
+          </a>
         </div>
 
-        {status === "submitted" && (
+        {status === "sent" && (
           <p className="form-success" role="status">
-            ✓ Enquiry sent — we'll get back to you shortly.
+            ✓ Enquiry received — we'll get back to you shortly.
+          </p>
+        )}
+        {status === "error" && (
+          <p className="form-error" role="alert">
+            Something went wrong. Please try again or reach us directly on WhatsApp.
           </p>
         )}
       </form>
