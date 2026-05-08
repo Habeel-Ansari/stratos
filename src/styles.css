@@ -611,6 +611,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   border: 1px solid var(--ln2); border-radius: var(--r-md);
   background: var(--bg-2); color: var(--tx);
   font: inherit; font-size: 0.94rem;
+  /* Disable OpenType ligatures — Mont has rf/ff/fi ligatures that render
+     incorrectly inside editable inputs, making typed characters appear missing */
+  font-feature-settings: "liga" 0, "calt" 0;
+  font-variant-ligatures: none;
   transition: border-color 160ms, background 160ms, box-shadow 160ms;
 }
 .form-field input::placeholder,
