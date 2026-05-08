@@ -412,7 +412,7 @@ export function CategoryGrid({ compact = false, linkTo = "/contact" }) {
 
 // Web3Forms access key — replace with your key from https://web3forms.com
 // Enter your email on that page and they will send you the key instantly.
-const W3F_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+const W3F_KEY = "539515b6-e2b8-4d98-b5cf-d13d8535f2f9";
 
 export function ContactSection() {
   // "idle" | "sending" | "sent" | "error"
