@@ -9,3 +9,4 @@ vite-dev.log
 vite-dev.err.log
 src/assets/logo-icon-opt.svg
 *.log
+.vite/

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   ChevronRight,
@@ -410,41 +410,24 @@ export function CategoryGrid({ compact = false, linkTo = "/contact" }) {
 
 /* ─── Contact section ──────────────────────────────────────── */
 export function ContactSection() {
-  const [form, setForm] = useState({
-    name: "", company: "", email: "", phone: "",
-    category: "Cable Solutions", details: "",
-  });
   const [status, setStatus] = useState("idle");
   const channelRef = useRef(null);
 
-  const handleChange = useCallback((event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    setStatus("idle");
-  }, []);
-
-  const summary = useMemo(() => [
-    "Stratos Energy enquiry",
-    `Name: ${form.name}`,
-    `Company: ${form.company}`,
-    `Email: ${form.email}`,
-    `Phone: ${form.phone}`,
-    `Category: ${form.category}`,
-    `Details: ${form.details || "Not provided"}`,
-  ].join("\n"), [form]);
-
-  const mailHref = useMemo(() => {
-    const sub = encodeURIComponent(`Enquiry from ${form.company || form.name || "website"}`);
-    return `mailto:sales@stratosenergy.sa?subject=${sub}&body=${encodeURIComponent(summary)}`;
-  }, [summary, form.company, form.name]);
-
-  const waHref = useMemo(
-    () => `https://wa.me/966597020427?text=${encodeURIComponent(summary)}`,
-    [summary]
-  );
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    const d = Object.fromEntries(new FormData(e.target));
+    const summary = [
+      "Stratos Energy enquiry",
+      `Name: ${d.name}`,
+      `Company: ${d.company}`,
+      `Email: ${d.email}`,
+      `Phone: ${d.phone}`,
+      `Category: ${d.category}`,
+      `Details: ${d.details || "Not provided"}`,
+    ].join("\n");
+    const sub = encodeURIComponent(`Enquiry from ${d.company || d.name || "website"}`);
+    const mailHref = `mailto:sales@stratosenergy.sa?subject=${sub}&body=${encodeURIComponent(summary)}`;
+    const waHref = `https://wa.me/966597020427?text=${encodeURIComponent(summary)}`;
     window.open(channelRef.current === "email" ? mailHref : waHref, "_blank", "noreferrer");
     setStatus("submitted");
   };
@@ -471,43 +454,41 @@ export function ContactSection() {
         })}
       </div>
 
-      {/* Form */}
+      {/* Form — uncontrolled inputs, data collected via FormData at submit */}
       <form className="quote-form" onSubmit={handleSubmit}>
         <div className="form-grid">
           <div className="form-field">
             <label htmlFor="name">Name</label>
             <input id="name" name="name" type="text" placeholder="Your full name"
-              autoComplete="name" required value={form.name} onChange={handleChange} />
+              autoComplete="name" required />
           </div>
           <div className="form-field">
             <label htmlFor="company">Company</label>
             <input id="company" name="company" type="text" placeholder="Company name"
-              autoComplete="organization" required value={form.company} onChange={handleChange} />
+              autoComplete="organization" required />
           </div>
           <div className="form-field">
             <label htmlFor="email">Email</label>
             <input id="email" name="email" type="text" inputMode="email"
               placeholder="name@company.com" autoComplete="email" required
               pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-              title="Enter a valid email address"
-              value={form.email} onChange={handleChange} />
+              title="Enter a valid email address" />
           </div>
           <div className="form-field">
             <label htmlFor="phone">Phone</label>
             <input id="phone" name="phone" type="tel" placeholder="+966"
-              autoComplete="tel" required value={form.phone} onChange={handleChange} />
+              autoComplete="tel" required />
           </div>
           <div className="form-field full">
             <label htmlFor="category">Product category</label>
-            <select id="category" name="category" value={form.category} onChange={handleChange}>
+            <select id="category" name="category" defaultValue="Cable Solutions">
               {categories.map((c) => <option key={c.title} value={c.title}>{c.title}</option>)}
             </select>
           </div>
           <div className="form-field full">
             <label htmlFor="details">Project details</label>
             <textarea id="details" name="details" rows={5}
-              placeholder="Tell us what you need, approximate quantities, and delivery expectations."
-              value={form.details} onChange={handleChange} />
+              placeholder="Tell us what you need, approximate quantities, and delivery expectations." />
           </div>
         </div>
 
