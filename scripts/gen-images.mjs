@@ -106,3 +106,84 @@ await sharp(Buffer.from(iconSvg))
   .toFile(join(publicDir, "apple-touch-icon.png"));
 
 console.log("✓  public/apple-touch-icon.png  (180 × 180)");
+
+/* ── Favicon PNGs  48 × 48, 32 × 32, 16 × 16 ──────────────── */
+// Google Search needs a PNG favicon ≥ 48 × 48; SVG-only favicons are ignored.
+const faviconSvg = `
+<svg width="48" height="48" viewBox="0 0 48 48"
+     xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bolt" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%"   stop-color="#ff7043"/>
+      <stop offset="100%" stop-color="#d32f2f"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="8" fill="#0c1e33"/>
+  <g transform="translate(24,24) scale(0.44) translate(-50,-50)">
+    <polygon points="58,4 22,54 46,54 42,96 78,46 54,46" fill="url(#bolt)"/>
+  </g>
+</svg>`;
+
+// 48×48 — minimum size Google Search accepts
+await sharp(Buffer.from(faviconSvg))
+  .resize(48, 48)
+  .png()
+  .toFile(join(publicDir, "favicon-48x48.png"));
+console.log("✓  public/favicon-48x48.png  (48 × 48)");
+
+// 32×32 — standard browser tab size
+await sharp(Buffer.from(faviconSvg))
+  .resize(32, 32)
+  .png()
+  .toFile(join(publicDir, "favicon-32x32.png"));
+console.log("✓  public/favicon-32x32.png  (32 × 32)");
+
+// 16×16 — small browser tab
+await sharp(Buffer.from(faviconSvg))
+  .resize(16, 16)
+  .png()
+  .toFile(join(publicDir, "favicon-16x16.png"));
+console.log("✓  public/favicon-16x16.png  (16 × 16)");
+
+/* ── favicon.ico  (16×16 + 32×32 bundled) ──────────────────── */
+// ICO = simple container: 6-byte header + 16-byte dir entry per image + PNG data
+const png16 = await sharp(Buffer.from(faviconSvg)).resize(16, 16).png().toBuffer();
+const png32 = await sharp(Buffer.from(faviconSvg)).resize(32, 32).png().toBuffer();
+
+function makeIco(images) {
+  const count = images.length;
+  const headerSize = 6;
+  const dirEntrySize = 16;
+  const dataOffset = headerSize + dirEntrySize * count;
+
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // type: 1 = ICO
+  header.writeUInt16LE(count, 4);
+
+  let currentOffset = dataOffset;
+  const dirEntries = images.map(({ buf, size }) => {
+    const entry = Buffer.alloc(16);
+    entry[0] = size === 256 ? 0 : size; // width (0 = 256)
+    entry[1] = size === 256 ? 0 : size; // height
+    entry[2] = 0;  // color count (0 = no palette)
+    entry[3] = 0;  // reserved
+    entry.writeUInt16LE(1, 4);  // planes
+    entry.writeUInt16LE(32, 6); // bit count
+    entry.writeUInt32LE(buf.length, 8);
+    entry.writeUInt32LE(currentOffset, 12);
+    currentOffset += buf.length;
+    return entry;
+  });
+
+  return Buffer.concat([header, ...dirEntries, ...images.map((i) => i.buf)]);
+}
+
+const icoBuffer = makeIco([
+  { buf: png16, size: 16 },
+  { buf: png32, size: 32 },
+]);
+
+import { writeFileSync } from "node:fs";
+writeFileSync(join(publicDir, "favicon.ico"), icoBuffer);
+console.log("✓  public/favicon.ico  (16×16 + 32×32)");
