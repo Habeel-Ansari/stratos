@@ -22,6 +22,11 @@
   font-family: "Mont", "Segoe UI", system-ui, sans-serif;
   color-scheme: light;
 
+  /* Disable OpenType ligatures sitewide — Mont has rf/ff/fi ligatures that
+     render as missing glyphs (e.g. "platform" -> "plaorm"), not just in inputs */
+  font-feature-settings: "liga" 0, "calt" 0;
+  font-variant-ligatures: none;
+
   /* Backgrounds */
   --bg:   #f3f8fd;
   --bg-2: #e8f2fa;
