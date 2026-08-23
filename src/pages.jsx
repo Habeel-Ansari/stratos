@@ -308,13 +308,6 @@ export function ProductsPage() {
 
   return (
     <>
-      {/* AI mapping spotlight */}
-      <section className="section">
-        <Reveal>
-          <SpotlightTile data={aiMappingSpotlight} />
-        </Reveal>
-      </section>
-
       {/* Hero */}
       <div className="page-hero">
         <motion.div
@@ -337,6 +330,13 @@ export function ProductsPage() {
           </Link>
         </motion.div>
       </div>
+
+      {/* AI mapping spotlight */}
+      <section className="section section-top0">
+        <Reveal>
+          <SpotlightTile data={aiMappingSpotlight} />
+        </Reveal>
+      </section>
 
       {/* Category grid */}
       <section className="section section-top0">
