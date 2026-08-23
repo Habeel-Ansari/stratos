@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import {
+  aiMappingSpotlight,
   categories,
   contactItems,
   industries,
@@ -14,6 +15,7 @@ import {
   ContactSection,
   Marquee,
   Reveal,
+  SpotlightTile,
   usePageMeta,
 } from "./siteComponents";
 
@@ -306,6 +308,13 @@ export function ProductsPage() {
 
   return (
     <>
+      {/* AI mapping spotlight */}
+      <section className="section">
+        <Reveal>
+          <SpotlightTile data={aiMappingSpotlight} />
+        </Reveal>
+      </section>
+
       {/* Hero */}
       <div className="page-hero">
         <motion.div

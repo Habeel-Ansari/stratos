@@ -3,6 +3,7 @@ import {
   Cable,
   CircleDot,
   Cog,
+  Cpu,
   Droplets,
   Factory,
   FlaskConical,
@@ -21,6 +22,7 @@ import {
   TowerControl,
   Zap,
 } from "lucide-react";
+import aiMappingImage from "./assets/ai-mapping-spotlight.webp";
 
 export const metrics = [
   { value: "10+", label: "core supply categories" },
@@ -176,6 +178,21 @@ export const categories = [
       "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80",
   },
 ];
+
+export const aiMappingSpotlight = {
+  eyebrow: "AI-powered solution",
+  title: "AI Cable Infrastructure Mapping",
+  text: "AI-powered site mapping and BIM modeling for building cable and wiring networks — built on our in-house AI platform to turn raw infrastructure data into accurate, usable MEP models.",
+  details: [
+    "Automated cable and conduit route mapping",
+    "AI-assisted MEP BIM model generation",
+    "As-built infrastructure verification and audits",
+    "Network topology and load documentation",
+    "Facility-ready models for handover and maintenance",
+  ],
+  icon: Cpu,
+  image: aiMappingImage,
+};
 
 export const productSpotlights = [
   "Miniature circuit breakers",

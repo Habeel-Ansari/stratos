@@ -368,6 +368,35 @@ function NavItem({ to, children, onClick }) {
 }
 
 /* ─── Category grid ────────────────────────────────────────── */
+export function SpotlightTile({ data, linkTo = "/contact" }) {
+  const Icon = data.icon;
+  return (
+    <article className="spotlight-tile">
+      <div className="spotlight-media">
+        <img
+          src={data.image}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="spotlight-body">
+        <span className="eyebrow"><Icon size={14} /> {data.eyebrow}</span>
+        <h3>{data.title}</h3>
+        <p>{data.text}</p>
+        <ul className="spotlight-list">
+          {data.details.map((d) => <li key={d}>{d}</li>)}
+        </ul>
+        <Link className="btn btn-primary" to={linkTo}>
+          Check eligibility <ArrowRight size={16} />
+        </Link>
+      </div>
+    </article>
+  );
+}
+
+/* ─── Category grid ────────────────────────────────────────── */
 export function CategoryGrid({ compact = false, linkTo = "/contact" }) {
   const reduced = useReducedMotion();
 
