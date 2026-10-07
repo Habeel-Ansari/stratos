@@ -108,7 +108,7 @@ export function HomePage() {
           {principles.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.07}>
               <FeatureCard
-                num={i + 1}
+                icon={p.icon}
                 title={p.title}
                 text={p.text}
               />
@@ -184,14 +184,11 @@ export function HomePage() {
 }
 
 /* simple icon-free feature card */
-function FeatureCard({ title, text }) {
+function FeatureCard({ icon: Icon, title, text }) {
   return (
     <div className="feature-card">
       <div className="feat-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M7 10l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <Icon size={22} strokeWidth={1.75} aria-hidden="true" />
       </div>
       <h3>{title}</h3>
       <p>{text}</p>

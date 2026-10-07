@@ -8,6 +8,7 @@ import {
   Factory,
   FlaskConical,
   Globe,
+  Headset,
   Landmark,
   Lock,
   Mail,
@@ -220,18 +221,22 @@ export const industries = [
 export const principles = [
   {
     title: "Reliable product sourcing",
+    icon: PackageCheck,
     text: "We help teams secure dependable electrical materials aligned with project requirements, quality targets, and delivery expectations.",
   },
   {
     title: "Industry-focused support",
+    icon: Factory,
     text: "Our approach is grounded in industrial and commercial project realities, not generic catalogue selling.",
   },
   {
     title: "Safety and performance first",
+    icon: ShieldCheck,
     text: "Every category is presented around safe installation, dependable operation, and long service life.",
   },
   {
     title: "Responsive customer service",
+    icon: Headset,
     text: "From early enquiry to quotation and supply coordination, the experience is designed to feel clear, direct, and fast.",
   },
 ];
