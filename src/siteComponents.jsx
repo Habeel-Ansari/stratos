@@ -335,7 +335,7 @@ export function SiteLayout({ children }) {
 
         <div className="footer-col">
           <span>Connect</span>
-          <a href="tel:+966597020427">+966 59 702 0427</a>
+          <a href="tel:+966558089022">+966 55 808 9022</a>
           <a href="mailto:info@stratosenergy.sa">info@stratosenergy.sa</a>
           <a href="mailto:sales@stratosenergy.sa">sales@stratosenergy.sa</a>
         </div>
@@ -343,7 +343,7 @@ export function SiteLayout({ children }) {
 
       <a
         className="whatsapp-fab"
-        href="https://wa.me/966597020427"
+        href="https://wa.me/966558089022"
         target="_blank"
         rel="noreferrer"
         aria-label="Chat on WhatsApp"
@@ -484,7 +484,7 @@ export function ContactSection() {
     }
   };
 
-  const waHref = "https://wa.me/966597020427";
+  const waHref = "https://wa.me/966558089022";
 
   return (
     <div className="contact-layout">

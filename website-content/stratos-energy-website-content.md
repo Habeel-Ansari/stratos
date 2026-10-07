@@ -10,7 +10,7 @@ Company Name: Stratos Energy
 Website: www.stratosenergy.sa  
 Primary Email: info@stratosenergy.sa  
 Sales Email: sales@stratosenergy.sa  
-Phone: +966 59 702 0427  
+Phone: +966 55 808 9022  
 Address: Al Khobar, Al Aqrabiyah Dist., 34446, Kingdom of Saudi Arabia
 
 ## Recommended Sitemap
@@ -366,7 +366,7 @@ Reach our team for quotations, product enquiries, and project support.
 
 ### Contact Details Block
 
-Phone: +966 59 702 0427  
+Phone: +966 55 808 9022  
 Email: info@stratosenergy.sa  
 Sales: sales@stratosenergy.sa  
 Website: www.stratosenergy.sa  
@@ -382,7 +382,7 @@ Stratos Energy supplies reliable electrical products for industrial, commercial,
 
 Quick Links: Home | About Us | Products | Industries | Contact Us
 
-Contact: +966 59 702 0427 | info@stratosenergy.sa | sales@stratosenergy.sa
+Contact: +966 55 808 9022 | info@stratosenergy.sa | sales@stratosenergy.sa
 
 Address: Al Khobar, Al Aqrabiyah Dist., 34446, Kingdom of Saudi Arabia
 

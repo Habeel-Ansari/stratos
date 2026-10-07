@@ -254,8 +254,8 @@ export const processSteps = [
 export const contactItems = [
   {
     label: "Call",
-    value: "+966 59 702 0427",
-    href: "tel:+966597020427",
+    value: "+966 55 808 9022",
+    href: "tel:+966558089022",
     icon: Phone,
   },
   {
